@@ -22,8 +22,9 @@
   src: url(../../public/fonts/Gotham-Medium.woff);
 }
 
-.App {
-  height: calc(100vh - 112px);
+.Map {
+  flex: 1;
+  height: auto;
   width: 100vw;
 }
 

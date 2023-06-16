@@ -3,17 +3,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { Disclosure, Transition } from "@headlessui/react";
 
-const NavbarOffline = () => {
+const NavbarOffline = (props) => {
   const [Search, setSearch] = useState("");
   const handleSearch = (SearchValue) => {
     console.log(SearchValue);
   };
+  const handleOpenLogin = (e) => {
+    props.LoginBtn();
+  };
   return (
-    <div className="w-full bg-white flex flex-row items-center px-16 py-4 justify-between">
+    <div className="w-full bg-white flex flex-row items-end px-16 pb-4 pt-2 justify-between relative">
       <img
         src="/images/numidia-noir.png"
         alt="numidia"
-        className="cursor-pointer md:h-20 sm:h-16 h-12"
+        className="cursor-pointer md:h-16 sm:h-14 h-12"
       />
       <div className="relative items-center text-gray-600 w-1/3 hidden lg:flex">
         <input
@@ -37,7 +40,10 @@ const NavbarOffline = () => {
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
       </div>
-      <button className="bg-numidiaOrange text-white px-10 py-2 rounded-xl text-lg font-GothamMedium hidden lg:flex">
+      <button
+        className="bg-numidiaOrange text-white px-10 py-2 rounded-xl text-lg font-GothamMedium hidden lg:flex"
+        onClick={(e) => handleOpenLogin(e)}
+      >
         Se connecter
       </button>
       <Disclosure

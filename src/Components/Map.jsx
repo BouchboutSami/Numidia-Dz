@@ -1,5 +1,6 @@
 import { React, useMemo } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import MapStyles from "./MapStyles";
 
 const Map = () => {
   const { isLoaded } = useLoadScript({
@@ -11,15 +12,16 @@ const Map = () => {
   );
 
   return (
-    <div className="App overflow-hidden w-full">
+    <div className="Map overflow-hidden w-full">
       {!isLoaded ? (
-        <h1>Loading...</h1>
+        <div></div>
       ) : (
         <GoogleMap
           mapContainerClassName="map-container"
           center={center}
           zoom={12}
-        />
+          options={{ styles: MapStyles }}
+        ></GoogleMap>
       )}
     </div>
   );

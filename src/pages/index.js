@@ -1,22 +1,30 @@
-import Main from "@/Components/Main";
+import LoginModal from "@/Components/LoginModal";
 import Map from "@/Components/Map";
 import NavbarOffline from "@/Components/NavbarOffline";
-import React from "react";
+import React, { useState } from "react";
 
 const Index = () => {
+  const [OpenLogin, setOpenLogin] = useState(false);
+  const handleClickLogin = () => {
+    setOpenLogin(true);
+  };
+  const handleCloseLogin = () => {
+    setOpenLogin(false);
+  };
   return (
     <>
-      {/* <script
+      <script
         type="text/javascript"
         id="hs-script-loader"
         async
         defer
         src="//js-eu1.hs-scripts.com/139493589.js"
-      ></script> */}
-      <div className="w-screen flex flex-col bg-numidiaBleu">
-        <NavbarOffline />
+      ></script>
+      <div className="h-screen w-screen flex flex-col bg-numidiaBleu relative">
+        <NavbarOffline LoginBtn={handleClickLogin} />
+
         <Map />
-        {/* <Main /> */}
+        {OpenLogin && <LoginModal Close={handleCloseLogin} />}
       </div>
     </>
   );
