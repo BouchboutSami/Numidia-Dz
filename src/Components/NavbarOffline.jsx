@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { Disclosure, Transition } from "@headlessui/react";
 
 const NavbarOffline = (props) => {
-  const [Search, setSearch] = useState("");
-  const handleSearch = (SearchValue) => {
-    console.log(SearchValue);
+  const [Lieux, setLieux] = useState(props.Lieux);
+  const [Search, setSearch] = useState({});
+  const [input, setinput] = useState("");
+
+  const handleSearch = () => {
+    props.search(Search);
   };
   const handleOpenLogin = (e) => {
     props.LoginBtn();
   };
+
+  useEffect(() => {
+    setLieux(props.Lieux);
+  }, [props]);
+
   return (
     <div className="w-full bg-white flex flex-row items-end px-16 pb-4 pt-2 justify-between relative z-[1000]">
       <img
@@ -18,28 +26,60 @@ const NavbarOffline = (props) => {
         alt="numidia"
         className="cursor-pointer md:h-16 sm:h-14 h-12"
       />
-      <div className="relative items-center text-gray-600 w-1/3 hidden lg:flex">
-        <input
-          className="w-full pl-4 border-2 border-gray-300 bg-white h-12 rounded-lg focus:outline-none text-lg font-GothamMedium focus:border-numidiaOrange"
-          type="text"
-          name="search"
-          placeholder="Rechercher un lieu"
-          onChange={(e) => {
-            e.preventDefault();
-            setSearch(e.target.value);
-          }}
-        />
-        <button
-          type="submit"
-          className="absolute right-4"
-          onClick={(e) => {
-            e.preventDefault();
-            handleSearch(Search);
-          }}
-        >
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </button>
+      <div className="relative w-1/3 flex flex-col">
+        <div className="relative items-center text-gray-600 w-full hidden sm:flex">
+          <input
+            className="w-full pl-4 border-2 border-gray-300 bg-white h-12 rounded-lg focus:outline-none text-lg font-GothamMedium focus:border-numidiaOrange"
+            type="text"
+            name="search"
+            placeholder="Rechercher un lieu"
+            onChange={(e) => {
+              setSearch({});
+              e.preventDefault();
+              setinput(e.target.value);
+            }}
+            autoComplete="off"
+            value={Search.Nom ? Search.Nom : input}
+          />
+          <button
+            type="submit"
+            className="absolute right-4"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSearch();
+            }}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+        </div>
+        <div className="absolute bottom-0 bg-white flex flex-col translate-y-full z-50 w-full gap-2 px-3 py-2 rounded-lg">
+          {Lieux.length > 0 && !Search.Nom
+            ? Lieux.filter((lieu) => {
+                const searchvalue = input.toLowerCase(lieu.value);
+                const NomLieu = lieu.Nom.toLowerCase();
+                return (
+                  searchvalue &&
+                  NomLieu.startsWith(searchvalue) &&
+                  NomLieu != searchvalue
+                );
+              }).map((lieu, index) => {
+                return (
+                  <div
+                    className="flex flex-col gap-1 cursor-pointer hover:text-numidiaOrange"
+                    key={lieu.idLieu}
+                    onClick={() => {
+                      setSearch(lieu);
+                    }}
+                  >
+                    <p>{lieu.Nom}</p>
+                    <div className="w-full h-[1px] bg-slate-300"></div>
+                  </div>
+                );
+              })
+            : null}
+        </div>
       </div>
+
       {props.user.pseudo ? (
         <p className="mb-2 text-xl font-GothamBlack">
           Hello{" "}

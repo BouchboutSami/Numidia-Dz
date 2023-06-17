@@ -32,3 +32,12 @@
   height: 100%;
   width: 100%;
 }
+
+.active {
+  color: #ff842b;
+  font-weight: bold;
+}
+
+body #hubspot-messages-iframe-container {
+  z-index: 5;
+}
