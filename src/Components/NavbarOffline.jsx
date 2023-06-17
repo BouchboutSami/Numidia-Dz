@@ -12,7 +12,7 @@ const NavbarOffline = (props) => {
     props.LoginBtn();
   };
   return (
-    <div className="w-full bg-white flex flex-row items-end px-16 pb-4 pt-2 justify-between relative">
+    <div className="w-full bg-white flex flex-row items-end px-16 pb-4 pt-2 justify-between relative z-[1000]">
       <img
         src="/images/numidia-noir.png"
         alt="numidia"
@@ -40,12 +40,21 @@ const NavbarOffline = (props) => {
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
       </div>
-      <button
-        className="bg-numidiaOrange text-white px-10 py-2 rounded-xl text-lg font-GothamMedium hidden lg:flex"
-        onClick={(e) => handleOpenLogin(e)}
-      >
-        Se connecter
-      </button>
+      {props.user.pseudo ? (
+        <p className="mb-2 text-xl font-GothamBlack">
+          Hello{" "}
+          <span className="text-numidiaOrange uppercase">
+            {props.user.pseudo}
+          </span>
+        </p>
+      ) : (
+        <button
+          className="bg-numidiaOrange text-white px-10 py-2 rounded-xl text-lg font-GothamMedium hidden lg:flex"
+          onClick={(e) => handleOpenLogin(e)}
+        >
+          Se connecter
+        </button>
+      )}
       <Disclosure
         className="flex lg:hidden outline outline-numidiaOrange rounded-lg p-2"
         as="div"
