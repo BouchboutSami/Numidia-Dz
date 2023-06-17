@@ -1,5 +1,10 @@
 import { React, useMemo, useState, useEffect } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  MarkerClustererF,
+  MarkerF,
+  useLoadScript,
+} from "@react-google-maps/api";
 import MapStyles from "./MapStyles";
 
 const Map = (props) => {
@@ -34,7 +39,7 @@ const Map = (props) => {
           {Lieux.length > 0
             ? Lieux.map((lieu, index) => {
                 return (
-                  <Marker
+                  <MarkerF
                     position={{ lat: lieu.lat, lng: lieu.long }}
                     key={lieu.idLieu}
                     icon={{
